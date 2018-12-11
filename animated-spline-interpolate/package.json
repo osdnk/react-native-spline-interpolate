@@ -1,0 +1,23 @@
+{
+  "name": "react-native-animated-spline-interpolate",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "keywords": [
+    "react-native"
+  ],
+  "files": [
+    "index.js"
+  ],
+  "author": "Michał Osadnik",
+  "license": "MIT",
+  "peerDependencies": {
+    "react-native": "^0.51.0"
+  },
+  "devDependencies": {
+    "react-native": "^0.51.0"
+  },
+  "dependencies": {
+    "react-native-spline-interpolate": "^0.0.2"
+  }
+}
