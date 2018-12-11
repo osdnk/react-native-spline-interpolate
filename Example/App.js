@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text, FlatList } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 
 import ReanimatedChartScreen from './reanimatedChart';
@@ -56,8 +56,6 @@ const ExampleApp = createStackNavigator(
         ...SCREENS
     },
     {
-    //initialRouteName: "ReanimatedUse"
-    // TODO UNCOMMENT ME
         initialRouteName: 'Main'
     }
 );

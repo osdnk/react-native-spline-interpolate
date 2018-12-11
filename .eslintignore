@@ -1,0 +1,8 @@
+!.*
+node_modules/*
+Example/ios/*
+Example/android/*
+Example/node_modules/*
+reanimated-spline-interpolate/node_modules/*
+animated-spline-interpolate/node_modules/*
+.eslintrc.js

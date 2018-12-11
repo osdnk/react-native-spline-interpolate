@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, StyleSheet } from 'react-native';
+import { Button, Dimensions, StyleSheet, View } from 'react-native';
 import splineInterpolate from 'react-native-reanimated-spline-interpolate';
 import Animated, { Easing } from 'react-native-reanimated';
 
@@ -71,14 +71,24 @@ const lagrangeInterpolate = (val, { inputRange, outputRange }) => {
   [200, 80],
 ]*/
 
+
+// animation from o to 200
 const POINTS = [
-    [0, 10],
-    [40, 60],
-    [50, 10],
-    [60, 100],
-    [70, 100],
-    [200, 110],
+  [0, 60, 70],
+  [30, 10, 0],
+  [40, 60, 40],
+  [50, 10, 50],
+  [60, 100, 60],
+  [70, 100, 70],
+  [100, 110, 180],
+  [130, 40, 130],
+  [140, 50, 140],
+  [150, 60, 100],
+  [160, 80, 150],
+  [180, 100, 180],
+  [200, 60, 70],
 ];
+
 
 const { width, height } = Dimensions.get('window');
 const DOT_SIZE = 20;
@@ -96,7 +106,7 @@ function runTiming() {
     const clock = new Clock();
     const config = {
         duration: 5000,
-        toValue: new Value(inputRange[inputRange.length-1]),
+        toValue: 200,
         easing: Easing.linear
     };
 
@@ -111,16 +121,22 @@ function runTiming() {
     ]);
 }
 
-const [inputRange, outputRange] = (() => {
-    const inputRange = [];
-    const outputRange = [];
-    for (let i in POINTS) {
-        const p = POINTS[i];
-        inputRange.push(p[0]);
-        outputRange.push(p[1]);
-    }
-    return [inputRange, outputRange];
-})();
+
+const prepareRanges = (ps) => {
+  const inputRange = [];
+  const outputRangeX = [];
+  const outputRangeY = [];
+  for (let i in ps) {
+    const p = ps[i];
+    inputRange.push(p[0]);
+    outputRangeX.push(p[1]);
+    outputRangeY.push(p[2]);
+  }
+  return [inputRange, outputRangeX, outputRangeY];
+}
+
+const [inputRange, outputRangeX, outputRangeY] = prepareRanges(POINTS)
+
 
 export default class Example extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -151,19 +167,21 @@ export default class Example extends React.Component {
           const res = [];
           for (let i = 0; i< inputRange.length; i++) {
               res.push({
-                  y: inputRange[i],
-                  x: outputRange[i]
+                  y: outputRangeY[i],
+                  x: outputRangeX[i],
+                  k: inputRange[i]
               });
           }
           return res;
       })();
-      const t = multiply(this._trans, scale);
-      const x = multiply(splineInterpolate(this._trans, { inputRange, outputRange }), scale);
+      //const t = multiply(this._trans, scale);
+      const x = multiply(splineInterpolate(this._trans, { inputRange: inputRange, outputRange: outputRangeX }), scale);
+      const y = multiply(splineInterpolate(this._trans, { inputRange: inputRange, outputRange: outputRangeY }), scale);
       return (
           <View style={styles.container}>
               {points.map(c => (
                   <View
-                      key={`__${c.y}`}
+                      key={`__${c.k}`}
                       style={[
                           styles.chartdot,
                           {
@@ -180,7 +198,7 @@ export default class Example extends React.Component {
                       {
                           transform: [
                               { translateX: this.state.running ? x : scale * POINTS[0][1] },
-                              { translateY: this.state.running ? t : scale * POINTS[0][0] }
+                              { translateY: this.state.running ? y : scale * POINTS[0][2] }
                           ]
                       }
                   ]}

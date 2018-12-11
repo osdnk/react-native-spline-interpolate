@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, StyleSheet, Animated } from 'react-native';
+import { Dimensions, StyleSheet, Animated, View, Button } from 'react-native';
 import splineInterpolate from 'react-native-animated-spline-interpolate';
 
 
