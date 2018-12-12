@@ -32,11 +32,31 @@ yarn add react-native-animated-spline-interpolate
 ```
 
 ## Usage
+
+### Import
+
+```javascript
+import splineInterpolate from "react-native-reanimated-spline-interpolate";
+```
+or
+```javascript
+import splineInterpolate from "react-native-animated-spline-interpolate";
+```
+
+### Interpolation
+
+```javascript
+const interpolationNode = splineInterpolate(inputNode, { inputRange, outputRange });
+```
+
+
+## Example
+
 ### core RN's `Animated`
 ```javascript
 import React, { Component } from "react";
 import { View, Animated } from "react-native";
-import { splineInterpolate } from "../../src/animatedSplineInterpolation";
+import splineInterpolate from "react-native-animated-spline-interpolate";
 
 const { multiply, Value, timing } = Animated;
 
@@ -68,7 +88,7 @@ export default class Example extends Component {
 ```javascript
 import React, { Component } from "react";
 import { View } from "react-native";
-import { splineInterpolate } from "../../src/reanimatedSplineInterpolation";
+import splineInterpolate from "react-native-reanimated-spline-interpolate";
 import Animated, { Easing } from "react-native-reanimated";
 
 const { cond, multiply, startClock, stopClock, clockRunning, block, timing, Value, Clock } = Animated;
